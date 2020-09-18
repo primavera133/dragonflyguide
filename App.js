@@ -1,87 +1,49 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
+//App.js
 import React from 'react'
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native'
+import {StyleSheet, Text, View, SafeAreaView} from 'react-native'
+import {ApolloProvider} from '@apollo/client'
+import {client} from './src/graphql/Client'
+import {Genera} from './src/components/Genera'
 
-import {Colors} from 'react-native/Libraries/NewAppScreen'
-
-const App: () => React$Node = () => {
+const App = () => {
   return (
-    <>
-      <StatusBar barStyle='dark-content' />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior='automatic'
-          style={styles.scrollView}>
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Dragonfly.guide</Text>
-              <Text style={styles.sectionDescription}>
-                Dragonflies of the west palearctic region.
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
+    <ApolloProvider client={client}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Page header</Text>
+        </View>
+        <View style={styles.contentContainer}>
+          <Genera />
+        </View>
       </SafeAreaView>
-    </>
+    </ApolloProvider>
   )
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  header: {
+    marginTop: 50,
+    alignItems: 'center',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  body: {
-    backgroundColor: Colors.white,
+  headerText: {
+    marginBottom: 5,
+    fontSize: 30,
+    fontWeight: 'bold',
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginBottom: 70,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  contentContainer: {
+    marginTop: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
-
 export default App
