@@ -14,9 +14,6 @@ const GENERA_LIST = gql`
 export function Genera () {
   const {loading, error, data} = useQuery(GENERA_LIST)
 
-  console.log(11111, error)
-  console.log(22222, data)
-
   if (loading)
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
