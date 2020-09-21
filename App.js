@@ -1,13 +1,11 @@
-//App.js
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {StyleSheet, Text, View, SafeAreaView} from 'react-native'
-import {ApolloProvider} from '@apollo/client'
-import {client} from './src/graphql/Client'
+import {ApolloPersistentProvider} from './src/graphql/ApolloPersistentProvider'
 import {Genera} from './src/components/Genera'
 
 const App = () => {
   return (
-    <ApolloProvider client={client}>
+    <ApolloPersistentProvider>
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Page header</Text>
@@ -16,7 +14,7 @@ const App = () => {
           <Genera />
         </View>
       </SafeAreaView>
-    </ApolloProvider>
+    </ApolloPersistentProvider>
   )
 }
 

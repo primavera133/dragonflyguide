@@ -1,18 +1,14 @@
 import React from 'react'
 import {StyleSheet, Text, View, ActivityIndicator, FlatList} from 'react-native'
-import {useQuery, gql} from '@apollo/client'
+import {useQuery} from '@apollo/client'
+import {GENERA_LIST_QUERY} from '../graphql/getGeneraQuery'
 import Genus from './Genus'
 
-const GENERA_LIST = gql`
-  query GetGenera {
-    genera {
-      genus_name
-    }
-  }
-`
-
 export function Genera () {
-  const {loading, error, data} = useQuery(GENERA_LIST)
+  const {loading, error, data} = useQuery(GENERA_LIST_QUERY)
+
+  // console.log('genera.js; data', data)
+  // console.log('genera.js; data.genera', data && data.genera)
 
   if (loading)
     return (
