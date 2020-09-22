@@ -1,6 +1,6 @@
 import {gql} from '@apollo/client'
 
-export const TAXONOMY_QUERY = gql`
+export default gql`
   query GetFamilies {
     taxonomy {
       families {

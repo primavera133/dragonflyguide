@@ -1,11 +1,11 @@
 import React from 'react'
 import {StyleSheet, Text, View, ActivityIndicator, FlatList} from 'react-native'
 import {useQuery} from '@apollo/client'
-import {TAXONOMY_QUERY} from '../graphql/getTaxonomy'
-import Family from './Family'
+import taxonomyQuery from '../graphql/getTaxonomy'
+import FamilyList from './FamilyList'
 
 export default () => {
-  const {loading, error, data} = useQuery(TAXONOMY_QUERY)
+  const {loading, error, data} = useQuery(taxonomyQuery)
 
   if (loading)
     return (
@@ -20,7 +20,7 @@ export default () => {
   return (
     <FlatList
       data={data.taxonomy.families}
-      renderItem={({item}) => <Family {...item} />}
+      renderItem={({item}) => <FamilyList {...item} />}
       keyExtractor={item => `${item.family_name}`}
       ListHeaderComponent={() => <Text>FAMILIES</Text>}
     />
