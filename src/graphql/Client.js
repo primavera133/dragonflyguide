@@ -1,5 +1,5 @@
 import {ApolloClient, InMemoryCache} from '@apollo/client'
-import {GENERA_LIST_QUERY} from './getGeneraQuery'
+import {TAXONOMY_QUERY} from './getTaxonomy'
 import {link} from './Link'
 import {persistCache} from 'apollo-cache-persist-dev'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 const cache = new InMemoryCache()
 // Initial state
 cache.writeQuery({
-  query: GENERA_LIST_QUERY,
+  query: TAXONOMY_QUERY,
   data: {
     genera: [],
   },

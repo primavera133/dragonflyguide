@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {StyleSheet, Text, View, SafeAreaView} from 'react-native'
 import {ApolloPersistentProvider} from './src/graphql/ApolloPersistentProvider'
-import {Genera} from './src/components/Genera'
+import Taxonomy from './src/components/Taxonomy'
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
           <Text style={styles.headerText}>Page header</Text>
         </View>
         <View style={styles.contentContainer}>
-          <Genera />
+          <Taxonomy />
         </View>
       </SafeAreaView>
     </ApolloPersistentProvider>
