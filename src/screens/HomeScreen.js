@@ -5,7 +5,7 @@ import Taxonomy from '../components/Taxonomy'
 const HomeScreen = () => (
   <SafeAreaView style={styles.container}>
     <View style={styles.header}>
-      <Text style={styles.headerText}>Page header</Text>
+      <Text style={styles.headerText}>dragonfly.guide</Text>
     </View>
     <View style={styles.contentContainer}>
       <Taxonomy />
