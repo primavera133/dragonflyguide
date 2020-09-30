@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
   StyleSheet,
   Text,
@@ -10,10 +10,12 @@ import {
 import {useQuery} from '@apollo/client'
 import {useNavigation} from '@react-navigation/native'
 import Markdown from 'react-native-markdown-display'
+import {Image} from 'react-native'
+import cloudinary from 'cloudinary-core'
 
 import getSpecieQuery from '../graphql/getSpecieQuery.js'
+import actualDimensions from '../utils/actualDimensions'
 import basicStyles from '../styles/basic'
-import markdownStyles from '../styles/markdown'
 
 const SpecieDetailsScreen = ({route}) => {
   const navigation = useNavigation()
@@ -24,8 +26,30 @@ const SpecieDetailsScreen = ({route}) => {
   })
 
   if (loading) return null
+  if (error) cinsole.log(error)
 
   const sp = data.specieFromScientificName
+
+  const cl = new cloudinary.Cloudinary({
+    cloud_name: sp.images.cloud_name,
+    secure: true,
+  })
+  const imageUrls = sp.images.all
+    .map(img => img.public_id)
+    .map(public_id => {
+      return {
+        public_id,
+        uri: cl.url(public_id, {width: 1080, crop: 'scale'}),
+      }
+    })
+
+  imageUrls.map(async img => {
+    const availableWidth = actualDimensions.width - 20
+    img.width = availableWidth
+    img.height = Math.floor((availableWidth * 3) / 4)
+  })
+
+  // Image.queryCache(imageUrls.map(img => img.url)).then(console.log)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,6 +67,19 @@ const SpecieDetailsScreen = ({route}) => {
         style={styles.contentContainer}
         contentContainerStyle={styles.contentContainerStyle}>
         <View style={styles.textBlock}>
+          <Text style={styles.h2}>Images</Text>
+          {imageUrls.map(img => (
+            <View style={styles.imageContainer} key={img.public_id}>
+              <Image
+                source={{uri: img.uri}}
+                style={{
+                  ...styles.image,
+                  width: img.width,
+                  height: img.height,
+                }}
+              />
+            </View>
+          ))}
           <Text style={styles.h2}>Description</Text>
           <Markdown style={{body: styles.mdParagraphBody}}>
             {sp.description}
@@ -131,6 +168,13 @@ const styles = StyleSheet.create({
   },
   localnames: {
     fontSize: 16,
+  },
+  imageContainer: {
+    paddingTop: 10,
+    paddingBottom: 20,
+  },
+  image: {
+    resizeMode: 'contain',
   },
   similar_species: {
     fontSize: 16,
